@@ -35,10 +35,15 @@ eos
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "rack", ">= 1.0.0"
-  spec.add_dependency "rack-proxy", "~> 0.7", ">= 0.7.0"
+  if ENV['RACK_VERSION'] == '2'
+    spec.add_dependency 'rack', ">= 1.0.0", '< 3.0'
+  else
+    spec.add_dependency 'rack', '>= 3.0', '< 4.0'
+    spec.add_dependency 'rackup', '~> 2.0'
+  end
+  spec.add_dependency "rack-proxy", "~> 0.6", ">= 0.6.1"
 
-  spec.add_development_dependency "bundler", "~> 2.5"
-  spec.add_development_dependency "rake", "~> 13.2"
+  spec.add_development_dependency "bundler", ">= 1.7", "< 3.0"
+  spec.add_development_dependency "rake", ">= 10.3"
 end
 # rubocop:enable

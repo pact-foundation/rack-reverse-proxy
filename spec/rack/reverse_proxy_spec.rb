@@ -76,7 +76,8 @@ RSpec.describe Rack::ReverseProxy do
     it "produces a response header of type Headers" do
       stub_request(:get, "http://example.com/test")
       get "/test"
-      expect(last_response.headers).to be_an_instance_of(Rack::Headers)
+      expected_class = ENV['RACK_VERSION'] == "2" ? Rack::Utils::HeaderHash : Rack::Headers
+      expect(last_response.headers).to be_an_instance_of(expected_class)
     end
 
     it "parses the headers as a Hash with values of type String" do
@@ -163,7 +164,11 @@ RSpec.describe Rack::ReverseProxy do
 
       headers = last_response.headers.to_hash
       expect(headers["Date"]).to eq("Wed, 22 Jul 2015 11:27:21 GMT")
-      expect(headers["date"]).to eq("Wed, 22 Jul 2015 11:27:21 GMT")
+      if ENV['RACK_VERSION'] == "2"
+        expect(headers["date"]).to be_nil
+      else
+        expect(headers["date"]).to eq("Wed, 22 Jul 2015 11:27:21 GMT")
+      end
     end
 
     it "formats the headers with dashes correctly" do
@@ -175,7 +180,11 @@ RSpec.describe Rack::ReverseProxy do
       get "/2test"
 
       headers = last_response.headers.to_hash
-      expect(headers["x-additional-info"]).to eq("something")
+      if ENV['RACK_VERSION'] == "2"
+        expect(headers["x-additional-info"]).to be_nil
+      else
+        expect(headers["x-additional-info"]).to eq("something")
+      end
     end
 
     it "the response header includes content-length" do
