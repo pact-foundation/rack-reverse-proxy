@@ -767,7 +767,7 @@ RSpec.describe Rack::ReverseProxy do
     end
   end
 
-  describe "as a rack app", skip: true do
+  describe "as a rack app", skip: ENV['RACK_VERSION'] == "2" do
     it "responds with 404 when the path is not matched" do
       get "/"
       expect(last_response).to be_not_found
