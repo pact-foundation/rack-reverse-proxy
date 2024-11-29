@@ -2,7 +2,6 @@
 require "simplecov"
 SimpleCov.start
 
-require "debug"
 require "rack/reverse_proxy"
 require "rack/test"
 require "webmock/rspec"

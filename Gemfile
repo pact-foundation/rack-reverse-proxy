@@ -17,5 +17,4 @@ end
 
 group :development, :test do
   gem "simplecov"
-  gem "debug", platforms: %i[mri mingw x64_mingw]
 end
