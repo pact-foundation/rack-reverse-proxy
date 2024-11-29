@@ -35,7 +35,7 @@ eos
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  if ENV['RACK_VERSION'] == '2'
+  if ENV["RACK_VERSION"] = "2"
     spec.add_dependency 'rack', ">= 1.0.0", '< 3.0'
   else
     spec.add_dependency 'rack', '>= 3.0', '< 4.0'

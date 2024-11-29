@@ -17,7 +17,7 @@ module RackReverseProxy
     }
 
     def initialize(app = nil, &b)
-      @app = app || lambda { |_| [404, ENV['RACK_VERSION'] == '2' ? [] : {}, []] }
+      @app = app || lambda { |_| [404, rack_version_less_than_three ? [] : {}, []] }
       @rules = []
       @global_options = DEFAULT_OPTIONS
       instance_eval(&b) if block_given?
@@ -28,6 +28,10 @@ module RackReverseProxy
     end
 
     private
+
+    def rack_version_less_than_three
+      Rack.release.split('.').first.to_i < 3
+    end
 
     def reverse_proxy_options(options)
       @global_options = @global_options.merge(options)

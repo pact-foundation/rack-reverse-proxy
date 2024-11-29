@@ -103,4 +103,8 @@ RSpec.configure do |config|
 
   # User-defined configuration
   WebMock.disable_net_connect!
+
+  def rack_version_less_than_three
+    Rack.release.split('.').first.to_i < 3
+  end
 end

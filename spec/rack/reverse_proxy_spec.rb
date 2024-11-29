@@ -76,7 +76,7 @@ RSpec.describe Rack::ReverseProxy do
     it "produces a response header of type Headers" do
       stub_request(:get, "http://example.com/test")
       get "/test"
-      expected_class = ENV['RACK_VERSION'] == "2" ? Rack::Utils::HeaderHash : Rack::Headers
+      expected_class = rack_version_less_than_three ? Rack::Utils::HeaderHash : Rack::Headers
       expect(last_response.headers).to be_an_instance_of(expected_class)
     end
 
@@ -164,11 +164,7 @@ RSpec.describe Rack::ReverseProxy do
 
       headers = last_response.headers.to_hash
       expect(headers["Date"]).to eq("Wed, 22 Jul 2015 11:27:21 GMT")
-      if ENV['RACK_VERSION'] == "2"
-        expect(headers["date"]).to be_nil
-      else
-        expect(headers["date"]).to eq("Wed, 22 Jul 2015 11:27:21 GMT")
-      end
+      expect(headers["date"]).to rack_version_less_than_three ? be_nil : eq("Wed, 22 Jul 2015 11:27:21 GMT")
     end
 
     it "formats the headers with dashes correctly" do
@@ -180,11 +176,7 @@ RSpec.describe Rack::ReverseProxy do
       get "/2test"
 
       headers = last_response.headers.to_hash
-      if ENV['RACK_VERSION'] == "2"
-        expect(headers["x-additional-info"]).to be_nil
-      else
-        expect(headers["x-additional-info"]).to eq("something")
-      end
+        expect(headers["x-additional-info"]).to eq(rack_version_less_than_three ? nil : "something")
     end
 
     it "the response header includes content-length" do
@@ -767,7 +759,7 @@ RSpec.describe Rack::ReverseProxy do
     end
   end
 
-  describe "as a rack app", skip: ENV['RACK_VERSION'] == "2" do
+  describe "as a rack app", skip: rack_version_less_than_three do
     it "responds with 404 when the path is not matched" do
       get "/"
       expect(last_response).to be_not_found

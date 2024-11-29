@@ -154,7 +154,7 @@ module RackReverseProxy
     def response_headers
       @_response_headers ||= begin
       headers = build_response_headers
-      headers = headers.transform_keys(&:downcase) unless ENV['RACK_VERSION'] == '2'
+      headers = headers.transform_keys(&:downcase) unless rack_version_less_than_three
       headers
       end
     end
@@ -168,16 +168,9 @@ module RackReverseProxy
 
     def rack_response_headers
       headers = Rack::Proxy.normalize_headers(format_headers(target_response.headers))
-      if ENV['RACK_VERSION'] == '2'
-      Rack::Utils::HeaderHash.new(headers)
-      else
-      Rack::Headers.new.merge(headers)
-      end
+      rack_version_less_than_three ?  Rack::Utils::HeaderHash.new(headers) : Rack::Headers.new.merge(headers)
     end
 
-    def set_rack_version_specific_location_header
-      location_header = ENV['RACK_VERSION'] == '2' ? 'Location' : 'location'
-    end
 
     def replace_location_header
       return unless need_replace_location?
@@ -280,6 +273,14 @@ module RackReverseProxy
 
     def ambiguous_match?
       matches.length > 1 && global_options[:matching] != :first
+    end
+
+    def rack_version_less_than_three
+      Rack.release.split('.').first.to_i < 3
+    end
+
+    def set_rack_version_specific_location_header
+      rack_version_less_than_three ? 'Location' : 'location'
     end
   end
 end
