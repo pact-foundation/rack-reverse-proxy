@@ -24,7 +24,7 @@ RSpec.describe Rack::ReverseProxy do
     )
   end
 
-  describe "global options", focus: true do
+  describe "global options" do
     it "starts with default global options" do
       m = Rack::ReverseProxy.new(dummy_app) do
         reverse_proxy "/test", "http://example.com/"
