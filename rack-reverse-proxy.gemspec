@@ -38,7 +38,7 @@ eos
   if ENV['RACK_VERSION'] == '2'
     spec.add_dependency 'rack', ">= 1.0.0", '< 3.0'
   else
-    spec.add_dependency 'rack', '>= 3.0', '< 4.0'
+    spec.add_dependency 'rack', ">= 1.0.0", '< 4.0'
     spec.add_dependency 'rackup', '~> 2.0'
   end
   spec.add_dependency "rack-proxy", "~> 0.6", ">= 0.6.1"
