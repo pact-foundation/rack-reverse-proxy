@@ -4,7 +4,7 @@ require "rack_reverse_proxy/version"
 
 # rubocop:disable
 Gem::Specification.new do |spec|
-  spec.name          = "rack-reverse-proxy"
+  spec.name          = "rack-reverse-proxy-pact"
   spec.version       = RackReverseProxy::VERSION
 
   spec.authors = [
