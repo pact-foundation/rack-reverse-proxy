@@ -3,6 +3,16 @@
 
 This is a simple reverse proxy for Rack that pretty heavily rips off Rack Forwarder. It is not meant for production systems (although it may work), as the webserver fronting your app is generally much better at this sort of thing.
 
+## Forked Repository Details
+
+This repository was forked from source - https://github.com/waterlink/rack-reverse-proxy in order to apply Rack 3 compatibility, alongside Rack 2 backwards-compatibility.
+
+Changes are applied against the branch [`rack_2_and_3_compat`](https://github.com/pact-foundation/rack-reverse-proxy/tree/feat/rack_2_and_3_compat)
+
+The upstream PR is [here](https://github.com/waterlink/rack-reverse-proxy/pull/74).
+
+It also includes [changes merged](https://github.com/waterlink/rack-reverse-proxy/pull/52) but not released to the original project, as requested by @bethesque [here](https://github.com/waterlink/rack-reverse-proxy/issues/67)
+
 ## Installation
 The gem is available on rubygems.  Assuming you have a recent version of Rubygems you should just be able to install it via:
 
