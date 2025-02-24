@@ -13,6 +13,12 @@ The upstream PR is [here](https://github.com/waterlink/rack-reverse-proxy/pull/7
 
 It also includes [changes merged](https://github.com/waterlink/rack-reverse-proxy/pull/52) but not released to the original project, as requested by @bethesque [here](https://github.com/waterlink/rack-reverse-proxy/issues/67)
 
+It is uploaded to rubygems, under [`rack-reverse-proxy-pact`](https://rubygems.org/gems/rack-reverse-proxy-pact), via the [`release` branch](https://github.com/pact-foundation/rack-reverse-proxy/tree/release).
+
+This is to avoid affecting existing consumers, of the [`rack_2_and_3_compat`](https://github.com/pact-foundation/rack-reverse-proxy/tree/feat/rack_2_and_3_compat) branch via git.
+
+If using the rubygem [`rack-reverse-proxy-pact`](https://rubygems.org/gems/rack-reverse-proxy-pact), users should only need to update the Gemfile/Gemspec entry. Existing imports _should_ work.
+
 ## Installation
 The gem is available on rubygems.  Assuming you have a recent version of Rubygems you should just be able to install it via:
 
